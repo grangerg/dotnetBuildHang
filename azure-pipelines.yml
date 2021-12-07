@@ -1,0 +1,23 @@
+# Azure pipeline definition
+#
+trigger:
+    branches:
+      include: [ prod ]
+    paths:
+      include: [ Example/* ]
+
+jobs:
+  - job: BuildApp
+    pool:
+      vmImage: "windows-2022" # 2021-12-04: only this image has .Net 6.0 preinstalled
+    steps:
+      - checkout: self
+      - task: PowerShell@2 # because the "powershell"/"pwsh" shortcuts don't run script files
+        inputs:
+          filePath: Example\_deploy.ps1
+      #- task: PublishPipelineArtifact@1 # because the "publish" shortcut is poorly documented
+      #  inputs:
+      #    targetPath: Example\BuildArtifacts\
+      #    artifactName: ExampleProject
+      #    artifactType: pipeline
+ 

@@ -1,0 +1,19 @@
+﻿#
+#	C# dev
+#_____________
+*.vs/
+*.suo
+**/bin/
+**/obj/
+**/packages/
+*csproj.user
+launchSettings.json
+
+#
+#	Extra
+#_____________
+*.cache
+*.[sS]ecrets.json
+**/BuildArtifacts
+
+
