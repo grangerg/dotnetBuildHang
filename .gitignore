@@ -15,5 +15,6 @@ launchSettings.json
 *.cache
 *.[sS]ecrets.json
 **/BuildArtifacts
+*.binlog
 
 
