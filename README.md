@@ -10,3 +10,7 @@ The very first time you run `_deploy.ps1`, the dotnet build command hangs for ~1
  * The build does **not** hang when running `_deploy.ps1` from Linux; this is only a Windows thing.
  * It doesn't seem to matter what runtime Id is the target of your build.
 
+# Explanation/Resolution
+A number of months ago, it was pointed out to me that the problem is how the `Start-Process` cmdlet's `-Wait` switch works, in connection with how the `dotnet` program works. In Windows, `-Wait` will wait for *all* descendant processes, not just the one being started. And `dotnet` will often spawn its own, detached child processes (for performance/caching reasons). On Linux, `-Wait` will only wait on the process that was started by the cmdlet. So `Start-Process` ends with the build on Linux. But on Windows, `Start-Process` also waits for the background/TSR processes that stick around for ~10 minutes, just in case you want to do another build.
+
+One solution is to avoid `Start-Process` and use the call operator (`&`).
